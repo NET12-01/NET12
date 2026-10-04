@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NET12 Telecomunicaciones | Internet de Alta Velocidad</title>
+    <meta name="description" content="NET12 Telecomunicaciones - Planes de internet ultrarrápidos para tu hogar y empresa.">
+    <!-- Fuentes de Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header / Navegación -->
+    <header class="header">
+        <div class="container header-container">
+            <a href="#" class="logo">
+                <img src="images/logo.png" alt="NET12 Telecomunicaciones Logo">
+            </a>
+            
+            <!-- Menú Hamburguesa para Móviles -->
+            <button class="menu-toggle" aria-label="Abrir menú">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <nav class="nav">
+                <ul>
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#planes">Planes</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                    <li class="nav-btn-mobile"><a href="#contacto" class="btn btn-primary">Contratar Ahora</a></li>
+                </ul>
+            </nav>
+            <a href="#contacto" class="btn btn-primary btn-nav-desktop">Contratar Ahora</a>
+        </div>
+    </header>
+
+    <!-- Sección Hero -->
+    <section id="inicio" class="hero">
+        <div class="container hero-content">
+            <h1>Conecta tu mundo con la <span>Velocidad de la Luz</span></h1>
+            <p>Disfruta de la mejor experiencia en streaming, gaming y teletrabajo con la red de fibra óptica más estable de la región.</p>
+            <div class="hero-buttons">
+                <a href="#planes" class="btn btn-primary">Ver Planes</a>
+                <a href="#contacto" class="btn btn-outline">Contactar Soporte</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Planes -->
+    <section id="planes" class="plans section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Nuestros Planes de Fibra Óptica</h2>
+                <p>Elige la velocidad que mejor se adapte a tus necesidades. Sin letras chiquitas.</p>
+            </div>
+            
+            <div class="plans-grid">
+                <!-- Plan 100 Mbps -->
+                <div class="plan-card animate-on-scroll">
+                    <div class="plan-header">
+                        <h3>PLAN</h3>
+                        <div class="plan-speed">100<span>Mbps</span></div>
+                        <p class="plan-desc">Ideal para navegar y redes sociales</p>
+                    </div>
+                    <div class="plan-features">
+                        <ul>
+                            <li><i class="fa-solid fa-wifi"></i> Red 2.4 GHz</li>
+                            <li><i class="fa-solid fa-house"></i> Hasta 5 dispositivos</li>
+                            <li><i class="fa-solid fa-shield-halved"></i> Seguridad Básica</li>
+                        </ul>
+                    </div>
+                    <div class="plan-footer">
+                        <a href="#contacto" class="btn btn-plan">Solicitar Plan</a>
+                    </div>
+                </div>
+
+                <!-- Plan 300 Mbps (Destacado) -->
+                <div class="plan-card featured animate-on-scroll">
+                    <div class="badge">Más Popular</div>
+                    <div class="plan-header">
+                        <h3>PLAN</h3>
+                        <div class="plan-speed">300<span>Mbps</span></div>
+                        <p class="plan-desc">El equilibrio perfecto para tu hogar</p>
+                    </div>
+                    <div class="plan-features">
+                        <ul>
+                            <li><i class="fa-solid fa-wifi"></i> Red 2.4G y 5G</li>
+                            <li><i class="fa-solid fa-play"></i> Streaming HD/4K</li>
+                            <li><i class="fa-solid fa-house"></i> Hasta 10 dispositivos</li>
+                        </ul>
+                    </div>
+                    <div class="plan-footer">
+                        <a href="#contacto" class="btn btn-primary">Solicitar Plan</a>
+                    </div>
+                </div>
+
+                <!-- Plan 600 Mbps -->
+                <div class="plan-card animate-on-scroll">
+                    <div class="plan-header">
+                        <h3>PLAN</h3>
+                        <div class="plan-speed">600<span>Mbps</span></div>
+                        <p class="plan-desc">Máxima potencia para gaming y 4K</p>
+                    </div>
+                    <div class="plan-features">
+                        <ul>
+                            <li><i class="fa-solid fa-wifi"></i> Red 2.4G y 5G Dual</li>
+                            <li><i class="fa-solid fa-play"></i> Streaming 4K + Gaming</li>
+                            <li><i class="fa-solid fa-house"></i> Dispositivos Ilimitados</li>
+                        </ul>
+                    </div>
+                    <div class="plan-footer">
+                        <a href="#contacto" class="btn btn-plan">Solicitar Plan</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Contacto -->
+    <section id="contacto" class="contact section">
+        <div class="container">
+            <div class="contact-wrapper">
+                <div class="contact-info">
+                    <h2>¿Listo para mejorar tu conexión?</h2>
+                    <p>Nuestro equipo de soporte técnico está disponible para ayudarte a contratar el mejor plan para tu hogar o empresa.</p>
+                    
+                    <div class="contact-item">
+                        <i class="fa-solid fa-phone"></i>
+                        <div>
+                            <h4>Llámanos</h4>
+                            <!-- NÚMERO FALSO -->
+                            <p>+54 9 11 5555-1234</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fa-solid fa-envelope"></i>
+                        <div>
+                            <h4>Escríbenos</h4>
+                            <!-- CORREO FALSO -->
+                            <p>contacto.net12.telecom@gmail.com</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-form-container">
+                    <form id="contactForm" class="contact-form">
+                        <h3>Solicita tu instalación</h3>
+                        <div class="form-group">
+                            <input type="text" placeholder="Nombre completo" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="Correo electrónico" required>
+                        </div>
+                        <div class="form-group">
+                            <select required>
+                                <option value="" disabled selected>Selecciona un plan</option>
+                                <option value="100">Plan 100 Mbps</option>
+                                <option value="300">Plan 300 Mbps</option>
+                                <option value="600">Plan 600 Mbps</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Enviar Solicitud</button>
+                        <p id="formMessage" class="form-message"></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="logo">
+                <img src="images/logo.png" alt="NET12 Telecomunicaciones Logo" class="footer-logo">
+            </div>
+            <p>© 2026 NET12 Telecomunicaciones. Todos los derechos reservados.</p>
+            <div class="socials">
+                <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
