@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (menuToggle) {
         menuToggle.addEventListener('click', () => {
             nav.classList.toggle('active');
-            // Cambiar icono de hamburguesa a X
             const icon = menuToggle.querySelector('i');
             if (nav.classList.contains('active')) {
                 icon.classList.remove('fa-bars');
@@ -40,7 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (window.scrollY > 50) {
             header.style.padding = '10px 0';
             header.style.boxShadow = '0 4px 15px rgba(0,0,0,0.1)';
-            // Reducir logo sutilmente al hacer scroll (solo en escritorio)
             if(window.innerWidth > 768 && logoImg) {
                 logoImg.style.height = '50px'; 
             }
@@ -68,11 +66,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }, observerOptions);
 
-    // Aplicar animación a las tarjetas de planes
     const animatedElements = document.querySelectorAll('.animate-on-scroll');
     
     animatedElements.forEach((el, index) => {
-        el.style.transitionDelay = `${index * 0.15}s`; // Retraso escalonado
+        el.style.transitionDelay = `${index * 0.15}s`;
         observer.observe(el);
     });
 
@@ -84,14 +81,11 @@ document.addEventListener('DOMContentLoaded', () => {
         contactForm.addEventListener('submit', (e) => {
             e.preventDefault();
             
-            // Simulación de envío exitoso
             formMessage.textContent = '¡Solicitud enviada con éxito! Nos contactaremos a la brevedad.';
-            formMessage.style.color = '#22c55e'; // Verde éxito
+            formMessage.style.color = '#22c55e';
             
-            // Resetear formulario
             contactForm.reset();
             
-            // Ocultar mensaje después de 5 segundos
             setTimeout(() => {
                 formMessage.textContent = '';
             }, 5000);
