@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeToggle = document.getElementById('themeToggle');
     const themeIcon = themeToggle.querySelector('i');
     
-    // Verificar preferencia guardada
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'dark') {
         document.body.classList.add('dark-mode');
@@ -33,10 +32,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // =========================================
     const countdownEl = document.getElementById('countdown');
     
-    // Fecha objetivo: 7 días desde ahora (puedes cambiarla a una fecha fija)
-    // Para usar una fecha fija: new Date('2026-12-31T23:59:59')
     const targetDate = new Date();
-    targetDate.setDate(targetDate.getDate() + 7); // 7 días desde hoy
+    targetDate.setDate(targetDate.getDate() + 7);
     
     function updateCountdown() {
         const now = new Date().getTime();
@@ -115,52 +112,154 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // =========================================
-    // 5. VERIFICADOR DE COBERTURA
+    // 5. VERIFICADOR DE COBERTURA - SANTA ROSA, LA PAMPA
     // =========================================
+    
+    // Base de datos de barrios y zonas con cobertura en Santa Rosa
+    const coverageDatabase = [
+        { 
+            barrio: 'Villa Parque', 
+            cps: ['L6300', '6300'],
+            variantes: ['villa parque', 'parque', 'v parque']
+        },
+        { 
+            barrio: 'Nuestra Señora de Luján', 
+            cps: ['L6300'],
+            variantes: ['lujan', 'nuestra senora de lujan', 'ns de lujan', 'virgen de lujan']
+        },
+        { 
+            barrio: 'Villa Santillán', 
+            cps: ['L6300'],
+            variantes: ['santillan', 'villa santillan', 'v santillan']
+        },
+        { 
+            barrio: 'Villa Alonso Norte', 
+            cps: ['L6300'],
+            variantes: ['villa alonso', 'alonso norte', 'alonso', 'v alonso']
+        },
+        { 
+            barrio: 'Aeropuerto', 
+            cps: ['L6300'],
+            variantes: ['aeropuerto', 'aeropuerto 1', 'barrio aeropuerto']
+        },
+        { 
+            barrio: 'Villa Martita', 
+            cps: ['L6300'],
+            variantes: ['martita', 'villa martita', 'v martita']
+        },
+        { 
+            barrio: 'Centro Empleados de Comercio', 
+            cps: ['L6300'],
+            variantes: ['centro empleados', 'empleados de comercio', 'cec', 'empleados comercio']
+        },
+        { 
+            barrio: 'Centro', 
+            cps: ['L6300'],
+            variantes: ['centro', 'microcentro', 'centro santa rosa']
+        },
+        { 
+            barrio: 'Polonia', 
+            cps: ['B1867CAT', 'B1867', 'L6300'],
+            variantes: ['polonia', 'polonia 1756', 'calle polonia']
+        },
+        { 
+            barrio: 'Villa Germinal', 
+            cps: ['L6300'],
+            variantes: ['germinal', 'villa germinal']
+        },
+        { 
+            barrio: 'Barrio Este', 
+            cps: ['L6300'],
+            variantes: ['barrio este', 'este']
+        },
+        { 
+            barrio: 'Barrio Norte', 
+            cps: ['L6300'],
+            variantes: ['barrio norte', 'norte']
+        },
+        { 
+            barrio: 'Barrio Sur', 
+            cps: ['L6300'],
+            variantes: ['barrio sur', 'sur']
+        },
+        { 
+            barrio: 'Barrio Oeste', 
+            cps: ['L6300'],
+            variantes: ['barrio oeste', 'oeste']
+        },
+        { 
+            barrio: 'Santa Rosa', 
+            cps: ['L6300'],
+            variantes: ['santa rosa', 'santa rosa la pampa', 'la pampa']
+        }
+    ];
+
+    // Normalizar texto (quita acentos, minúsculas, etc.)
+    function normalizeText(text) {
+        return text
+            .toLowerCase()
+            .trim()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/[.,#-]/g, '')
+            .replace(/\s+/g, ' ');
+    }
+
     const coverageInput = document.getElementById('coverageInput');
     const checkCoverageBtn = document.getElementById('checkCoverageBtn');
     const coverageResult = document.getElementById('coverageResult');
-    
-    // Base de datos de zonas con cobertura (fácil de modificar)
-    const coverageZones = [
-        'villa devoto', 'devoto', '1417', '1419',
-        'villa del parque', 'parque', '1416',
-        'agronomia', 'agronomía', '1429',
-        'villa santa rita', 'santa rita', '1416',
-        'monte castro', 'castro', '1407',
-        'versalles', 'versalles', '1407',
-        'floresta', 'floresta', '1407',
-        'velez sarsfield', 'velez', '1407'
-    ];
-    
+
     function checkCoverage() {
-        const query = coverageInput.value.trim().toLowerCase();
+        const query = normalizeText(coverageInput.value);
         
         if (!query) {
-            coverageResult.textContent = '⚠️ Por favor, ingresá un barrio o código postal.';
+            coverageResult.innerHTML = '⚠️ Por favor, ingresá un barrio, dirección o código postal.';
             coverageResult.className = 'coverage-result error';
             return;
         }
         
-        // Simular carga
-        coverageResult.textContent = '⏳ Verificando disponibilidad...';
+        coverageResult.innerHTML = '⏳ Verificando disponibilidad...';
         coverageResult.className = 'coverage-result loading';
         
         setTimeout(() => {
-            const hasCoverage = coverageZones.some(zone => 
-                query.includes(zone) || zone.includes(query)
-            );
+            let matchFound = null;
             
-            if (hasCoverage) {
-                coverageResult.innerHTML = '✅ ¡Buenas noticias! Tenemos cobertura en tu zona. <a href="#contacto" style="color: inherit; text-decoration: underline;">Contratá ahora</a>';
+            for (const zona of coverageDatabase) {
+                const barrioNorm = normalizeText(zona.barrio);
+                const coincideBarrio = barrioNorm.includes(query) || query.includes(barrioNorm);
+                
+                const coincideVariante = zona.variantes.some(v => {
+                    const vNorm = normalizeText(v);
+                    return query.includes(vNorm) || vNorm.includes(query);
+                });
+                
+                const coincideCP = zona.cps.some(cp => 
+                    query === normalizeText(cp) || query.includes(normalizeText(cp))
+                );
+                
+                if (coincideBarrio || coincideVariante || coincideCP) {
+                    matchFound = zona;
+                    break;
+                }
+            }
+            
+            if (matchFound) {
+                coverageResult.innerHTML = `✅ ¡Buenas noticias! Tenemos cobertura en <strong>${matchFound.barrio}</strong>. <a href="#contacto" style="color: inherit; text-decoration: underline;">Contratá ahora</a>`;
                 coverageResult.className = 'coverage-result success';
             } else {
-                coverageResult.innerHTML = '❌ Todavía no llegamos a tu zona, pero estamos expandiéndonos. <a href="#contacto" style="color: inherit; text-decoration: underline;">Contactanos</a> para avisarte cuando esté disponible.';
+                // Guardar búsqueda sin cobertura para análisis
+                try {
+                    const busquedas = JSON.parse(localStorage.getItem('busquedasSinCobertura') || '[]');
+                    busquedas.push({ zona: query, fecha: new Date().toISOString() });
+                    localStorage.setItem('busquedasSinCobertura', JSON.stringify(busquedas));
+                } catch(e) {}
+                
+                coverageResult.innerHTML = `❌ Todavía no llegamos a tu zona. <a href="https://wa.me/5491150059148?text=Hola,%20quiero%20saber%20si%20tienen%20cobertura%20en%20${encodeURIComponent(query)}" target="_blank" style="color: inherit; text-decoration: underline;">Avisanos por WhatsApp</a> y te confirmamos.`;
                 coverageResult.className = 'coverage-result error';
             }
         }, 800);
     }
-    
+
     if (checkCoverageBtn) {
         checkCoverageBtn.addEventListener('click', checkCoverage);
         coverageInput.addEventListener('keypress', (e) => {
@@ -263,7 +362,7 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             const target = document.querySelector(this.getAttribute('href'));
             if (target) {
-                const offsetTop = target.offsetTop - 80; // Ajuste para el header
+                const offsetTop = target.offsetTop - 80;
                 window.scrollTo({
                     top: offsetTop,
                     behavior: 'smooth'
