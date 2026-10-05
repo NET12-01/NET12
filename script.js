@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // 1. Lógica del Menú Hamburguesa para Móviles
+    // 1. Menú Hamburguesa
     const menuToggle = document.querySelector('.menu-toggle');
     const nav = document.querySelector('.nav');
     const navLinks = document.querySelectorAll('.nav a');
@@ -19,7 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Cerrar menú al hacer clic en un enlace (para móviles)
     navLinks.forEach(link => {
         link.addEventListener('click', () => {
             if (nav.classList.contains('active')) {
@@ -31,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 2. Efecto de scroll en el Header
+    // 2. Header scroll effect
     const header = document.querySelector('.header');
     const logoImg = document.querySelector('.logo img');
     
@@ -51,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 3. Animación de aparición para las tarjetas (Scroll Reveal)
+    // 3. Scroll Reveal (animaciones)
     const observerOptions = {
         threshold: 0.1,
         rootMargin: "0px 0px -50px 0px"
@@ -69,11 +68,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const animatedElements = document.querySelectorAll('.animate-on-scroll');
     
     animatedElements.forEach((el, index) => {
-        el.style.transitionDelay = `${index * 0.15}s`;
+        el.style.transitionDelay = `${index * 0.1}s`;
         observer.observe(el);
     });
 
-    // 4. Manejo del formulario de contacto
+    // 4. FAQ Acordeón
+    const faqQuestions = document.querySelectorAll('.faq-question');
+    
+    faqQuestions.forEach(question => {
+        question.addEventListener('click', () => {
+            const faqItem = question.parentElement;
+            
+            // Cerrar otros abiertos
+            document.querySelectorAll('.faq-item').forEach(item => {
+                if (item !== faqItem) {
+                    item.classList.remove('active');
+                }
+            });
+
+            // Alternar el actual
+            faqItem.classList.toggle('active');
+        });
+    });
+
+    // 5. Formulario de contacto
     const contactForm = document.getElementById('contactForm');
     const formMessage = document.getElementById('formMessage');
 
@@ -92,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 5. Smooth scroll para enlaces internos
+    // 6. Smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
