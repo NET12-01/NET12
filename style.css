@@ -22,7 +22,6 @@
     --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
 }
 
-/* Modo Oscuro */
 body.dark-mode {
     --color-black: #f1f5f9;
     --color-dark-gray: #cbd5e1;
@@ -207,7 +206,7 @@ body {
 }
 
 /* =========================================
-   HEADER Y NAVEGACIÓN MÓVIL
+   HEADER Y NAVEGACIÓN
    ========================================= */
 .header {
     background-color: rgba(255, 255, 255, 0.98);
@@ -649,6 +648,7 @@ body.dark-mode .plan-features li {
     gap: 10px;
     border: 1px solid var(--color-border);
     transition: var(--transition);
+    font-size: 0.9rem;
 }
 
 .coverage-item:hover {
@@ -659,6 +659,7 @@ body.dark-mode .plan-features li {
 .coverage-item i {
     color: var(--color-red);
     font-size: 1.2rem;
+    flex-shrink: 0;
 }
 
 .coverage-note {
