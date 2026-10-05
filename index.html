@@ -5,15 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NET12 Telecomunicaciones | Internet de Alta Velocidad</title>
     <meta name="description" content="NET12 Telecomunicaciones - Planes de internet ultrarrápidos para tu hogar y empresa.">
-    <!-- Fuentes de Google -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <!-- FontAwesome para iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+    <!-- Banner de Promoción con Cuenta Regresiva -->
+    <div class="promo-banner" id="promoBanner">
+        <div class="container promo-content">
+            <p><i class="fa-solid fa-bolt"></i> <strong>PROMO DE LANZAMIENTO:</strong> 50% OFF en los primeros 3 meses. Termina en: 
+                <span id="countdown" class="countdown">--d --h --m --s</span>
+            </p>
+            <button class="promo-close" onclick="document.getElementById('promoBanner').style.display='none'" aria-label="Cerrar">
+                <i class="fa-solid fa-times"></i>
+            </button>
+        </div>
+    </div>
 
     <!-- Header / Navegación -->
     <header class="header">
@@ -22,16 +32,25 @@
                 <img src="images/logo.png" alt="NET12 Telecomunicaciones Logo">
             </a>
             
-            <!-- Menú Hamburguesa para Móviles -->
-            <button class="menu-toggle" aria-label="Abrir menú">
-                <i class="fa-solid fa-bars"></i>
-            </button>
+            <div class="header-actions">
+                <!-- Toggle Modo Oscuro -->
+                <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+
+                <!-- Menú Hamburguesa -->
+                <button class="menu-toggle" aria-label="Abrir menú">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
 
             <nav class="nav">
                 <ul>
                     <li><a href="#inicio">Inicio</a></li>
                     <li><a href="#planes">Planes</a></li>
                     <li><a href="#testimonios">Opiniones</a></li>
+                    <li><a href="#cobertura">Cobertura</a></li>
+                    <li><a href="#nosotros">Nosotros</a></li>
                     <li><a href="#faq">FAQ</a></li>
                     <li><a href="#contacto">Contacto</a></li>
                     <li class="nav-btn-mobile"><a href="#contacto" class="btn btn-primary">Contratar Ahora</a></li>
@@ -162,6 +181,70 @@
         </div>
     </section>
 
+    <!-- Sección de Cobertura con Verificador -->
+    <section id="cobertura" class="coverage section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Verificá tu Cobertura</h2>
+                <p>Ingresá tu código postal o barrio para confirmar si ya llegamos a tu zona.</p>
+            </div>
+            
+            <!-- Verificador de Cobertura -->
+            <div class="coverage-checker">
+                <div class="checker-input">
+                    <input type="text" id="coverageInput" placeholder="Ej: Villa Devoto, Agronomía, 1417..." aria-label="Ingresá tu barrio o código postal">
+                    <button id="checkCoverageBtn" class="btn btn-primary">
+                        <i class="fa-solid fa-magnifying-glass"></i> Verificar
+                    </button>
+                </div>
+                <div id="coverageResult" class="coverage-result"></div>
+            </div>
+
+            <!-- Lista de zonas -->
+            <div class="coverage-grid">
+                <div class="coverage-item"><i class="fa-solid fa-location-dot"></i> Villa Devoto</div>
+                <div class="coverage-item"><i class="fa-solid fa-location-dot"></i> Villa del Parque</div>
+                <div class="coverage-item"><i class="fa-solid fa-location-dot"></i> Agronomía</div>
+                <div class="coverage-item"><i class="fa-solid fa-location-dot"></i> Villa Santa Rita</div>
+                <div class="coverage-item"><i class="fa-solid fa-location-dot"></i> Monte Castro</div>
+                <div class="coverage-item"><i class="fa-solid fa-location-dot"></i> Versalles</div>
+            </div>
+            <p class="coverage-note">Si no ves tu barrio, <a href="#contacto">consultanos</a> y te confirmamos disponibilidad.</p>
+        </div>
+    </section>
+
+    <!-- Sección Sobre Nosotros -->
+    <section id="nosotros" class="about section">
+        <div class="container">
+            <div class="about-wrapper">
+                <div class="about-image">
+                    <div class="about-icon">
+                        <i class="fa-solid fa-tower-broadcast"></i>
+                    </div>
+                </div>
+                <div class="about-text">
+                    <h2>Somos NET12</h2>
+                    <p>Nacimos en 2020 con una misión clara: que los vecinos de nuestra zona tengan <strong>internet de verdad</strong>. Sin caídas, sin latencias, sin excusas.</p>
+                    <p>Somos una empresa local, atendida por personas reales que entienden tus necesidades. No somos un call center automatizado, somos tus vecinos.</p>
+                    <div class="about-stats">
+                        <div class="stat">
+                            <strong>+2.000</strong>
+                            <span>Hogares conectados</span>
+                        </div>
+                        <div class="stat">
+                            <strong>99.9%</strong>
+                            <span>Uptime garantizado</span>
+                        </div>
+                        <div class="stat">
+                            <strong>24/7</strong>
+                            <span>Soporte local</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Sección de Preguntas Frecuentes -->
     <section id="faq" class="faq section">
         <div class="container">
@@ -187,25 +270,6 @@
                     <div class="faq-answer"><p>Tarjetas de crédito, débito, transferencia bancaria y efectivo en puntos de pago.</p></div>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Sección de Cobertura -->
-    <section id="cobertura" class="coverage section">
-        <div class="container">
-            <div class="section-title">
-                <h2>Zonas de Cobertura</h2>
-                <p>Actualmente brindamos servicio en las siguientes zonas. ¡Consultá por la tuya!</p>
-            </div>
-            <div class="coverage-grid">
-                <div class="coverage-item"><i class="fa-solid fa-location-dot"></i> Villa Devoto</div>
-                <div class="coverage-item"><i class="fa-solid fa-location-dot"></i> Villa del Parque</div>
-                <div class="coverage-item"><i class="fa-solid fa-location-dot"></i> Agronomía</div>
-                <div class="coverage-item"><i class="fa-solid fa-location-dot"></i> Villa Santa Rita</div>
-                <div class="coverage-item"><i class="fa-solid fa-location-dot"></i> Monte Castro</div>
-                <div class="coverage-item"><i class="fa-solid fa-location-dot"></i> Versalles</div>
-            </div>
-            <p class="coverage-note">Si no ves tu barrio, <a href="#contacto">consultanos</a> y te confirmamos disponibilidad.</p>
         </div>
     </section>
 
@@ -289,6 +353,11 @@
        aria-label="Contactar por WhatsApp">
         <i class="fa-brands fa-whatsapp"></i>
     </a>
+
+    <!-- Botón Volver Arriba -->
+    <button id="backToTop" class="back-to-top" aria-label="Volver arriba">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
 
     <script src="script.js"></script>
 
