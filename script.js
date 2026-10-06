@@ -1,122 +1,93 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function() {
     
     // =========================================
-    // 1. MODO OSCURO (DARK MODE)
+    // 1. MODO OSCURO
     // =========================================
-    const themeToggle = document.getElementById('themeToggle');
-    const themeIcon = themeToggle.querySelector('i');
+    var themeToggle = document.getElementById('themeToggle');
+    var themeIcon = themeToggle ? themeToggle.querySelector('i') : null;
     
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-        document.body.classList.add('dark-mode');
-        themeIcon.classList.remove('fa-moon');
-        themeIcon.classList.add('fa-sun');
-    }
-    
-    themeToggle.addEventListener('click', () => {
-        document.body.classList.toggle('dark-mode');
-        
-        if (document.body.classList.contains('dark-mode')) {
+    if (themeToggle && themeIcon) {
+        // Verificar preferencia guardada
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
             themeIcon.classList.remove('fa-moon');
             themeIcon.classList.add('fa-sun');
-            localStorage.setItem('theme', 'dark');
-        } else {
-            themeIcon.classList.remove('fa-sun');
-            themeIcon.classList.add('fa-moon');
-            localStorage.setItem('theme', 'light');
-        }
-    });
-
-    // =========================================
-    // 2. CUENTA REGRESIVA DE PROMOCIÓN
-    // =========================================
-    const countdownEl = document.getElementById('countdown');
-    
-    const targetDate = new Date();
-    targetDate.setDate(targetDate.getDate() + 7);
-    
-    function updateCountdown() {
-        const now = new Date().getTime();
-        const distance = targetDate.getTime() - now;
-        
-        if (distance < 0) {
-            countdownEl.textContent = '¡Promo finalizada!';
-            return;
         }
         
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-        
-        countdownEl.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-    }
-    
-    if (countdownEl) {
-        updateCountdown();
-        setInterval(updateCountdown, 1000);
-    }
-
-    // =========================================
-    // 3. MENÚ HAMBURGUESA
-    // =========================================
-    const menuToggle = document.querySelector('.menu-toggle');
-    const nav = document.querySelector('.nav');
-    const navLinks = document.querySelectorAll('.nav a');
-
-    if (menuToggle) {
-        menuToggle.addEventListener('click', () => {
-            nav.classList.toggle('active');
-            const icon = menuToggle.querySelector('i');
-            if (nav.classList.contains('active')) {
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-times');
+        themeToggle.addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
             } else {
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
             }
         });
     }
 
-    navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            if (nav.classList.contains('active')) {
-                nav.classList.remove('active');
-                const icon = menuToggle.querySelector('i');
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
+    // =========================================
+    // 2. MENÚ HAMBURGUESA
+    // =========================================
+    var menuToggle = document.getElementById('menuToggle');
+    var mainNav = document.getElementById('mainNav');
+    var menuIcon = menuToggle ? menuToggle.querySelector('i') : null;
+
+    if (menuToggle && mainNav && menuIcon) {
+        menuToggle.addEventListener('click', function() {
+            mainNav.classList.toggle('active');
+            
+            if (mainNav.classList.contains('active')) {
+                menuIcon.classList.remove('fa-bars');
+                menuIcon.classList.add('fa-times');
+            } else {
+                menuIcon.classList.remove('fa-times');
+                menuIcon.classList.add('fa-bars');
             }
         });
-    });
+
+        // Cerrar menú al hacer clic en cualquier enlace
+        var allNavLinks = mainNav.querySelectorAll('a');
+        allNavLinks.forEach(function(link) {
+            link.addEventListener('click', function() {
+                mainNav.classList.remove('active');
+                menuIcon.classList.remove('fa-times');
+                menuIcon.classList.add('fa-bars');
+            });
+        });
+    }
 
     // =========================================
-    // 4. HEADER SCROLL EFFECT
+    // 3. HEADER SCROLL EFFECT
     // =========================================
-    const header = document.querySelector('.header');
-    const logoImg = document.querySelector('.logo img');
+    var header = document.querySelector('.header');
+    var logoImg = document.querySelector('.logo img');
     
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            header.style.padding = '10px 0';
-            header.style.boxShadow = '0 4px 15px rgba(0,0,0,0.1)';
-            if(window.innerWidth > 768 && logoImg) {
-                logoImg.style.height = '48px'; 
+    if (header && logoImg) {
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                header.style.padding = '10px 0';
+                header.style.boxShadow = '0 4px 15px rgba(0,0,0,0.1)';
+                if (window.innerWidth > 768) {
+                    logoImg.style.height = '48px';
+                }
+            } else {
+                header.style.padding = '15px 0';
+                header.style.boxShadow = 'var(--shadow-sm)';
+                if (window.innerWidth > 768) {
+                    logoImg.style.height = '55px';
+                }
             }
-        } else {
-            header.style.padding = '15px 0';
-            header.style.boxShadow = 'var(--shadow-sm)';
-            if(window.innerWidth > 768 && logoImg) {
-                logoImg.style.height = '55px'; 
-            }
-        }
-    });
+        });
+    }
 
     // =========================================
-    // 5. VERIFICADOR DE COBERTURA - SANTA ROSA, LA PAMPA
-    // Base de datos completa con todos los barrios de Santa Rosa
+    // 4. VERIFICADOR DE COBERTURA - SANTA ROSA
     // =========================================
-    const coverageDatabase = [
-        // --- Barrios con cobertura confirmada por CPE ---
+    var coverageDatabase = [
         { barrio: 'Villa Parque', cps: ['L6300', '6300'], variantes: ['villa parque', 'parque', 'v parque'] },
         { barrio: 'Nuestra Señora de Luján', cps: ['L6300', '6300'], variantes: ['lujan', 'nuestra senora de lujan', 'ns de lujan', 'virgen de lujan'] },
         { barrio: 'Villa Santillán', cps: ['L6300', '6300'], variantes: ['santillan', 'villa santillan', 'v santillan'] },
@@ -126,8 +97,6 @@ document.addEventListener('DOMContentLoaded', () => {
         { barrio: 'Centro Empleados de Comercio', cps: ['L6300', '6300'], variantes: ['centro empleados', 'empleados de comercio', 'cec', 'empleados comercio'] },
         { barrio: 'Centro', cps: ['L6300', '6300'], variantes: ['centro', 'microcentro', 'centro santa rosa'] },
         { barrio: 'Polonia', cps: ['B1867CAT', 'B1867', 'L6300'], variantes: ['polonia', 'polonia 1756', 'calle polonia'] },
-
-        // --- Otros barrios de Santa Rosa ---
         { barrio: 'Villa Germinal', cps: ['L6300'], variantes: ['germinal', 'villa germinal'] },
         { barrio: 'Barrio Este', cps: ['L6300'], variantes: ['barrio este', 'este'] },
         { barrio: 'Barrio Norte', cps: ['L6300'], variantes: ['barrio norte', 'norte'] },
@@ -145,9 +114,9 @@ document.addEventListener('DOMContentLoaded', () => {
         { barrio: 'Almafuerte', cps: ['L6300'], variantes: ['almafuerte', 'barrio almafuerte'] },
         { barrio: 'Bella Vista', cps: ['L6300'], variantes: ['bella vista', 'b vista'] },
         { barrio: 'Fitte', cps: ['L6300'], variantes: ['fitte', 'barrio fitte'] },
-        { barrio: 'Butaló', cps: ['L6300'], variantes: ['butalo', 'barrio butalo', 'butalo 1', 'butalo 2', 'butalo 3'] },
-        { barrio: 'FONAVI', cps: ['L6300'], variantes: ['fonavi', 'fonavi 25', 'fonavi 27', 'fonavi 34', 'fonavi 42', 'fonavi 1702'] },
-        { barrio: 'Plan 5000', cps: ['L6300'], variantes: ['plan 5000', 'plan 5.000', 'plan cinco mil'] },
+        { barrio: 'Butaló', cps: ['L6300'], variantes: ['butalo', 'barrio butalo'] },
+        { barrio: 'FONAVI', cps: ['L6300'], variantes: ['fonavi'] },
+        { barrio: 'Plan 5000', cps: ['L6300'], variantes: ['plan 5000', 'plan cinco mil'] },
         { barrio: '26 de Septiembre', cps: ['L6300'], variantes: ['26 de septiembre', 'veintiseis de septiembre'] },
         { barrio: 'Los Hornos', cps: ['L6300'], variantes: ['los hornos', 'hornos'] },
         { barrio: 'Escondido', cps: ['L6300'], variantes: ['escondido', 'barrio escondido'] },
@@ -159,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { barrio: 'Villa Amalia', cps: ['L6300'], variantes: ['amalia', 'villa amalia'] },
         { barrio: 'Villa Hilda', cps: ['L6300'], variantes: ['hilda', 'villa hilda'] },
         { barrio: 'Inti Hue', cps: ['L6300'], variantes: ['inti hue', 'intihue'] },
-        { barrio: 'Lowo Che', cps: ['L6300', 'L6301'], variantes: ['lowo che', 'lowoche', 'lowo che este', 'lowo che oeste'] },
+        { barrio: 'Lowo Che', cps: ['L6300', 'L6301'], variantes: ['lowo che', 'lowoche'] },
         { barrio: 'Nueva Vista', cps: ['L6300'], variantes: ['nueva vista', 'nva vista'] },
         { barrio: 'El Faro', cps: ['L6300'], variantes: ['el faro', 'faro'] },
         { barrio: 'Colonos Pampeanos', cps: ['L6300'], variantes: ['colonos pampeanos', 'colonos'] },
@@ -175,21 +144,16 @@ document.addEventListener('DOMContentLoaded', () => {
         { barrio: 'Congreso', cps: ['L6300'], variantes: ['congreso', 'barrio congreso'] },
         { barrio: 'Pioneros', cps: ['L6300'], variantes: ['pioneros', 'barrio pioneros'] },
         { barrio: 'Chakra Raíz', cps: ['L6300', 'L6301'], variantes: ['chakra raiz', 'chakra'] },
-        { barrio: 'Zona Quintas', cps: ['L6300'], variantes: ['zona quintas', 'quintas', 'zona quintas oeste', 'zona quintas sur'] },
+        { barrio: 'Zona Quintas', cps: ['L6300'], variantes: ['zona quintas', 'quintas'] },
         { barrio: 'Villa Ale', cps: ['L6300'], variantes: ['villa ale', 'ale'] },
         { barrio: 'Villa Alonso', cps: ['L6300'], variantes: ['villa alonso', 'alonso'] },
         { barrio: 'Villa Aurora', cps: ['L6300', 'L6301'], variantes: ['villa aurora', 'aurora'] },
         { barrio: 'Villa Bertotti', cps: ['L6300', 'L6301'], variantes: ['villa bertotti', 'bertotti'] },
         { barrio: 'Villa Olga', cps: ['L6300', 'L6301'], variantes: ['villa olga', 'olga'] },
-
-        // --- Zona Toay (limítrofe) ---
         { barrio: 'Toay', cps: ['L6301'], variantes: ['toay', 'ciudad de toay'] },
-
-        // --- Ciudad completa (por si escriben "Santa Rosa") ---
         { barrio: 'Santa Rosa', cps: ['L6300'], variantes: ['santa rosa', 'santa rosa la pampa', 'la pampa', 'capital'] }
     ];
 
-    // Normalizar texto
     function normalizeText(text) {
         return text
             .toLowerCase()
@@ -200,12 +164,14 @@ document.addEventListener('DOMContentLoaded', () => {
             .replace(/\s+/g, ' ');
     }
 
-    const coverageInput = document.getElementById('coverageInput');
-    const checkCoverageBtn = document.getElementById('checkCoverageBtn');
-    const coverageResult = document.getElementById('coverageResult');
+    var coverageInput = document.getElementById('coverageInput');
+    var checkCoverageBtn = document.getElementById('checkCoverageBtn');
+    var coverageResult = document.getElementById('coverageResult');
 
     function checkCoverage() {
-        const query = normalizeText(coverageInput.value);
+        if (!coverageInput || !coverageResult) return;
+        
+        var query = normalizeText(coverageInput.value);
         
         if (!query) {
             coverageResult.innerHTML = '⚠️ Por favor, ingresá un barrio, dirección o código postal.';
@@ -216,21 +182,23 @@ document.addEventListener('DOMContentLoaded', () => {
         coverageResult.innerHTML = '⏳ Verificando disponibilidad...';
         coverageResult.className = 'coverage-result loading';
         
-        setTimeout(() => {
-            let matchFound = null;
+        setTimeout(function() {
+            var matchFound = null;
             
-            for (const zona of coverageDatabase) {
-                const barrioNorm = normalizeText(zona.barrio);
-                const coincideBarrio = barrioNorm.includes(query) || query.includes(barrioNorm);
+            for (var i = 0; i < coverageDatabase.length; i++) {
+                var zona = coverageDatabase[i];
+                var barrioNorm = normalizeText(zona.barrio);
+                var coincideBarrio = barrioNorm.indexOf(query) !== -1 || query.indexOf(barrioNorm) !== -1;
                 
-                const coincideVariante = zona.variantes.some(v => {
-                    const vNorm = normalizeText(v);
-                    return query.includes(vNorm) || vNorm.includes(query);
+                var coincideVariante = zona.variantes.some(function(v) {
+                    var vNorm = normalizeText(v);
+                    return query.indexOf(vNorm) !== -1 || vNorm.indexOf(query) !== -1;
                 });
                 
-                const coincideCP = zona.cps.some(cp => 
-                    query === normalizeText(cp) || query.includes(normalizeText(cp))
-                );
+                var coincideCP = zona.cps.some(function(cp) {
+                    var cpNorm = normalizeText(cp);
+                    return query === cpNorm || query.indexOf(cpNorm) !== -1;
+                });
                 
                 if (coincideBarrio || coincideVariante || coincideCP) {
                     matchFound = zona;
@@ -239,24 +207,24 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             
             if (matchFound) {
-                coverageResult.innerHTML = `✅ ¡Buenas noticias! Tenemos cobertura en <strong>${matchFound.barrio}</strong>. <a href="#contacto" style="color: inherit; text-decoration: underline;">Contratá ahora</a>`;
+                coverageResult.innerHTML = '✅ ¡Buenas noticias! Tenemos cobertura en <strong>' + matchFound.barrio + '</strong>. <a href="#contacto" style="color: inherit; text-decoration: underline;">Contratá ahora</a>';
                 coverageResult.className = 'coverage-result success';
             } else {
                 try {
-                    const busquedas = JSON.parse(localStorage.getItem('busquedasSinCobertura') || '[]');
+                    var busquedas = JSON.parse(localStorage.getItem('busquedasSinCobertura') || '[]');
                     busquedas.push({ zona: query, fecha: new Date().toISOString() });
                     localStorage.setItem('busquedasSinCobertura', JSON.stringify(busquedas));
                 } catch(e) {}
                 
-                coverageResult.innerHTML = `❌ Todavía no llegamos a tu zona. <a href="https://wa.me/5491150059148?text=Hola,%20quiero%20saber%20si%20tienen%20cobertura%20en%20${encodeURIComponent(query)}" target="_blank" style="color: inherit; text-decoration: underline;">Avisanos por WhatsApp</a> y te confirmamos.`;
+                coverageResult.innerHTML = '❌ Todavía no llegamos a tu zona. <a href="https://wa.me/5491150059148?text=Hola,%20quiero%20saber%20si%20tienen%20cobertura%20en%20' + encodeURIComponent(query) + '" target="_blank" style="color: inherit; text-decoration: underline;">Avisanos por WhatsApp</a> y te confirmamos.';
                 coverageResult.className = 'coverage-result error';
             }
         }, 800);
     }
 
-    if (checkCoverageBtn) {
+    if (checkCoverageBtn && coverageInput) {
         checkCoverageBtn.addEventListener('click', checkCoverage);
-        coverageInput.addEventListener('keypress', (e) => {
+        coverageInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 e.preventDefault();
                 checkCoverage();
@@ -265,39 +233,46 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // =========================================
-    // 6. SCROLL REVEAL (ANIMACIONES)
+    // 5. SCROLL REVEAL
     // =========================================
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: "0px 0px -50px 0px"
-    };
+    if ('IntersectionObserver' in window) {
+        var observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                observer.unobserve(entry.target);
-            }
+        var observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        var animatedElements = document.querySelectorAll('.animate-on-scroll');
+        animatedElements.forEach(function(el, index) {
+            el.style.transitionDelay = (index * 0.1) + 's';
+            observer.observe(el);
         });
-    }, observerOptions);
-
-    const animatedElements = document.querySelectorAll('.animate-on-scroll');
-    
-    animatedElements.forEach((el, index) => {
-        el.style.transitionDelay = `${index * 0.1}s`;
-        observer.observe(el);
-    });
+    } else {
+        // Fallback para navegadores antiguos
+        var animatedElements2 = document.querySelectorAll('.animate-on-scroll');
+        animatedElements2.forEach(function(el) {
+            el.classList.add('visible');
+        });
+    }
 
     // =========================================
-    // 7. FAQ ACORDEÓN
+    // 6. FAQ ACORDEÓN
     // =========================================
-    const faqQuestions = document.querySelectorAll('.faq-question');
+    var faqQuestions = document.querySelectorAll('.faq-question');
     
-    faqQuestions.forEach(question => {
-        question.addEventListener('click', () => {
-            const faqItem = question.parentElement;
+    faqQuestions.forEach(function(question) {
+        question.addEventListener('click', function() {
+            var faqItem = question.parentElement;
             
-            document.querySelectorAll('.faq-item').forEach(item => {
+            document.querySelectorAll('.faq-item').forEach(function(item) {
                 if (item !== faqItem) {
                     item.classList.remove('active');
                 }
@@ -308,13 +283,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // =========================================
-    // 8. FORMULARIO DE CONTACTO
+    // 7. FORMULARIO DE CONTACTO
     // =========================================
-    const contactForm = document.getElementById('contactForm');
-    const formMessage = document.getElementById('formMessage');
+    var contactForm = document.getElementById('contactForm');
+    var formMessage = document.getElementById('formMessage');
 
-    if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
+    if (contactForm && formMessage) {
+        contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
             formMessage.textContent = '¡Solicitud enviada con éxito! Nos contactaremos a la brevedad.';
@@ -322,41 +297,46 @@ document.addEventListener('DOMContentLoaded', () => {
             
             contactForm.reset();
             
-            setTimeout(() => {
+            setTimeout(function() {
                 formMessage.textContent = '';
             }, 5000);
         });
     }
 
     // =========================================
-    // 9. BOTÓN VOLVER ARRIBA
+    // 8. BOTÓN VOLVER ARRIBA
     // =========================================
-    const backToTop = document.getElementById('backToTop');
+    var backToTop = document.getElementById('backToTop');
     
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 400) {
-            backToTop.classList.add('visible');
-        } else {
-            backToTop.classList.remove('visible');
-        }
-    });
-    
-    backToTop.addEventListener('click', () => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
+    if (backToTop) {
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 400) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
         });
-    });
+        
+        backToTop.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
 
     // =========================================
-    // 10. SMOOTH SCROLL
+    // 9. SMOOTH SCROLL
     // =========================================
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
+    document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+        anchor.addEventListener('click', function(e) {
+            var href = this.getAttribute('href');
+            if (href === '#') return;
+            
+            var target = document.querySelector(href);
             if (target) {
-                const offsetTop = target.offsetTop - 80;
+                e.preventDefault();
+                var offsetTop = target.offsetTop - 80;
                 window.scrollTo({
                     top: offsetTop,
                     behavior: 'smooth'
