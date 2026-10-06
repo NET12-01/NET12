@@ -1,367 +1,374 @@
-document.addEventListener('DOMContentLoaded', () => {
-    
-    // =========================================
-    // 1. MODO OSCURO (DARK MODE)
-    // =========================================
-    const themeToggle = document.getElementById('themeToggle');
-    const themeIcon = themeToggle.querySelector('i');
-    
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-        document.body.classList.add('dark-mode');
-        themeIcon.classList.remove('fa-moon');
-        themeIcon.classList.add('fa-sun');
-    }
-    
-    themeToggle.addEventListener('click', () => {
-        document.body.classList.toggle('dark-mode');
-        
-        if (document.body.classList.contains('dark-mode')) {
-            themeIcon.classList.remove('fa-moon');
-            themeIcon.classList.add('fa-sun');
-            localStorage.setItem('theme', 'dark');
-        } else {
-            themeIcon.classList.remove('fa-sun');
-            themeIcon.classList.add('fa-moon');
-            localStorage.setItem('theme', 'light');
-        }
-    });
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NET12 Telecomunicaciones | Internet de Alta Velocidad en Santa Rosa</title>
+    <meta name="description" content="NET12 Telecomunicaciones - Planes de internet ultrarrápidos para tu hogar y empresa en Santa Rosa, La Pampa.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-    // =========================================
-    // 2. CUENTA REGRESIVA DE PROMOCIÓN
-    // =========================================
-    const countdownEl = document.getElementById('countdown');
-    
-    const targetDate = new Date();
-    targetDate.setDate(targetDate.getDate() + 7);
-    
-    function updateCountdown() {
-        const now = new Date().getTime();
-        const distance = targetDate.getTime() - now;
-        
-        if (distance < 0) {
-            countdownEl.textContent = '¡Promo finalizada!';
-            return;
-        }
-        
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-        
-        countdownEl.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-    }
-    
-    if (countdownEl) {
-        updateCountdown();
-        setInterval(updateCountdown, 1000);
-    }
+    <!-- Banner de Promoción con Cuenta Regresiva -->
+    <div class="promo-banner" id="promoBanner">
+        <div class="container promo-content">
+            <p><i class="fa-solid fa-bolt"></i> <strong>PROMO DE LANZAMIENTO:</strong> 50% OFF en los primeros 3 meses. Termina en: 
+                <span id="countdown" class="countdown">--d --h --m --s</span>
+            </p>
+            <button class="promo-close" onclick="document.getElementById('promoBanner').style.display='none'" aria-label="Cerrar">
+                <i class="fa-solid fa-times"></i>
+            </button>
+        </div>
+    </div>
 
-    // =========================================
-    // 3. MENÚ HAMBURGUESA
-    // =========================================
-    const menuToggle = document.querySelector('.menu-toggle');
-    const nav = document.querySelector('.nav');
-    const navLinks = document.querySelectorAll('.nav a');
-
-    if (menuToggle) {
-        menuToggle.addEventListener('click', () => {
-            nav.classList.toggle('active');
-            const icon = menuToggle.querySelector('i');
-            if (nav.classList.contains('active')) {
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-times');
-            } else {
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
-            }
-        });
-    }
-
-    navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            if (nav.classList.contains('active')) {
-                nav.classList.remove('active');
-                const icon = menuToggle.querySelector('i');
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
-            }
-        });
-    });
-
-    // =========================================
-    // 4. HEADER SCROLL EFFECT
-    // =========================================
-    const header = document.querySelector('.header');
-    const logoImg = document.querySelector('.logo img');
-    
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            header.style.padding = '10px 0';
-            header.style.boxShadow = '0 4px 15px rgba(0,0,0,0.1)';
-            if(window.innerWidth > 768 && logoImg) {
-                logoImg.style.height = '48px'; 
-            }
-        } else {
-            header.style.padding = '15px 0';
-            header.style.boxShadow = 'var(--shadow-sm)';
-            if(window.innerWidth > 768 && logoImg) {
-                logoImg.style.height = '55px'; 
-            }
-        }
-    });
-
-    // =========================================
-    // 5. VERIFICADOR DE COBERTURA - SANTA ROSA, LA PAMPA
-    // Base de datos completa con todos los barrios de Santa Rosa
-    // =========================================
-    const coverageDatabase = [
-        // --- Barrios con cobertura confirmada por CPE ---
-        { barrio: 'Villa Parque', cps: ['L6300', '6300'], variantes: ['villa parque', 'parque', 'v parque'] },
-        { barrio: 'Nuestra Señora de Luján', cps: ['L6300', '6300'], variantes: ['lujan', 'nuestra senora de lujan', 'ns de lujan', 'virgen de lujan'] },
-        { barrio: 'Villa Santillán', cps: ['L6300', '6300'], variantes: ['santillan', 'villa santillan', 'v santillan'] },
-        { barrio: 'Villa Alonso Norte', cps: ['L6300', '6300'], variantes: ['villa alonso', 'alonso norte', 'alonso', 'v alonso'] },
-        { barrio: 'Aeropuerto', cps: ['L6300', '6300'], variantes: ['aeropuerto', 'aeropuerto 1', 'barrio aeropuerto'] },
-        { barrio: 'Villa Martita', cps: ['L6300', '6300'], variantes: ['martita', 'villa martita', 'v martita'] },
-        { barrio: 'Centro Empleados de Comercio', cps: ['L6300', '6300'], variantes: ['centro empleados', 'empleados de comercio', 'cec', 'empleados comercio'] },
-        { barrio: 'Centro', cps: ['L6300', '6300'], variantes: ['centro', 'microcentro', 'centro santa rosa'] },
-        { barrio: 'Polonia', cps: ['B1867CAT', 'B1867', 'L6300'], variantes: ['polonia', 'polonia 1756', 'calle polonia'] },
-
-        // --- Otros barrios de Santa Rosa ---
-        { barrio: 'Villa Germinal', cps: ['L6300'], variantes: ['germinal', 'villa germinal'] },
-        { barrio: 'Barrio Este', cps: ['L6300'], variantes: ['barrio este', 'este'] },
-        { barrio: 'Barrio Norte', cps: ['L6300'], variantes: ['barrio norte', 'norte'] },
-        { barrio: 'Barrio Sur', cps: ['L6300'], variantes: ['barrio sur', 'sur'] },
-        { barrio: 'Barrio Oeste', cps: ['L6300'], variantes: ['barrio oeste', 'oeste'] },
-        { barrio: 'Villa Elvina', cps: ['L6300'], variantes: ['elvina', 'villa elvina'] },
-        { barrio: 'Villa del Busto', cps: ['L6300'], variantes: ['busto', 'villa del busto', 'v del busto'] },
-        { barrio: 'Villa Sarmiento', cps: ['L6300'], variantes: ['sarmiento', 'villa sarmiento'] },
-        { barrio: 'Villa Las Camelias', cps: ['L6300'], variantes: ['camelias', 'villa las camelias', 'v las camelias'] },
-        { barrio: 'Villa Uhalde', cps: ['L6300'], variantes: ['uhalde', 'villa uhalde', 'v uhalde'] },
-        { barrio: 'Villa Thomas Mason', cps: ['L6300'], variantes: ['thomas mason', 'villa thomas mason', 'v thomas mason'] },
-        { barrio: 'Villa Elisa', cps: ['L6300'], variantes: ['elisa', 'villa elisa'] },
-        { barrio: 'Sagrado Corazón de Jesús', cps: ['L6300'], variantes: ['sagrado corazon', 'sagrado corazon de jesus', 'sc de jesus'] },
-        { barrio: 'Malvinas Argentinas', cps: ['L6300'], variantes: ['malvinas', 'malvinas argentinas'] },
-        { barrio: 'Almafuerte', cps: ['L6300'], variantes: ['almafuerte', 'barrio almafuerte'] },
-        { barrio: 'Bella Vista', cps: ['L6300'], variantes: ['bella vista', 'b vista'] },
-        { barrio: 'Fitte', cps: ['L6300'], variantes: ['fitte', 'barrio fitte'] },
-        { barrio: 'Butaló', cps: ['L6300'], variantes: ['butalo', 'barrio butalo', 'butalo 1', 'butalo 2', 'butalo 3'] },
-        { barrio: 'FONAVI', cps: ['L6300'], variantes: ['fonavi', 'fonavi 25', 'fonavi 27', 'fonavi 34', 'fonavi 42', 'fonavi 1702'] },
-        { barrio: 'Plan 5000', cps: ['L6300'], variantes: ['plan 5000', 'plan 5.000', 'plan cinco mil'] },
-        { barrio: '26 de Septiembre', cps: ['L6300'], variantes: ['26 de septiembre', 'veintiseis de septiembre'] },
-        { barrio: 'Los Hornos', cps: ['L6300'], variantes: ['los hornos', 'hornos'] },
-        { barrio: 'Escondido', cps: ['L6300'], variantes: ['escondido', 'barrio escondido'] },
-        { barrio: 'El Salitral', cps: ['L6300'], variantes: ['el salitral', 'nuevo salitral', 'salitral'] },
-        { barrio: 'Micaela García', cps: ['L6300'], variantes: ['micaela garcia', 'micaela'] },
-        { barrio: 'Nuevo Amanecer', cps: ['L6300'], variantes: ['nuevo amanecer', 'el amanecer', 'amanecer'] },
-        { barrio: 'Santa María de las Pampas', cps: ['L6300'], variantes: ['santa maria de las pampas', 'santa maria'] },
-        { barrio: 'Villa Navarro Sarmiento', cps: ['L6300'], variantes: ['navarro sarmiento', 'villa navarro sarmiento'] },
-        { barrio: 'Villa Amalia', cps: ['L6300'], variantes: ['amalia', 'villa amalia'] },
-        { barrio: 'Villa Hilda', cps: ['L6300'], variantes: ['hilda', 'villa hilda'] },
-        { barrio: 'Inti Hue', cps: ['L6300'], variantes: ['inti hue', 'intihue'] },
-        { barrio: 'Lowo Che', cps: ['L6300', 'L6301'], variantes: ['lowo che', 'lowoche', 'lowo che este', 'lowo che oeste'] },
-        { barrio: 'Nueva Vista', cps: ['L6300'], variantes: ['nueva vista', 'nva vista'] },
-        { barrio: 'El Faro', cps: ['L6300'], variantes: ['el faro', 'faro'] },
-        { barrio: 'Colonos Pampeanos', cps: ['L6300'], variantes: ['colonos pampeanos', 'colonos'] },
-        { barrio: 'Portal del Sur', cps: ['L6300'], variantes: ['portal del sur', 'portal sur'] },
-        { barrio: 'Pueblos Originarios', cps: ['L6300'], variantes: ['pueblos originarios', 'originarios'] },
-        { barrio: 'Nelson Mandela', cps: ['L6300'], variantes: ['nelson mandela', 'mandela'] },
-        { barrio: 'ARA San Juan', cps: ['L6300'], variantes: ['ara san juan', 'ara'] },
-        { barrio: 'Peñi Ruca', cps: ['L6300'], variantes: ['peni ruca', 'peñi ruca'] },
-        { barrio: 'Regazzoli', cps: ['L6300'], variantes: ['regazzoli', 'aquiles regazzoli'] },
-        { barrio: 'Néstor Kirchner', cps: ['L6300'], variantes: ['nestor kirchner', 'kirchner'] },
-        { barrio: 'Esperanza', cps: ['L6300'], variantes: ['esperanza', 'barrio esperanza'] },
-        { barrio: 'Matadero', cps: ['L6300'], variantes: ['matadero', 'barrio matadero'] },
-        { barrio: 'Congreso', cps: ['L6300'], variantes: ['congreso', 'barrio congreso'] },
-        { barrio: 'Pioneros', cps: ['L6300'], variantes: ['pioneros', 'barrio pioneros'] },
-        { barrio: 'Chakra Raíz', cps: ['L6300', 'L6301'], variantes: ['chakra raiz', 'chakra'] },
-        { barrio: 'Zona Quintas', cps: ['L6300'], variantes: ['zona quintas', 'quintas', 'zona quintas oeste', 'zona quintas sur'] },
-        { barrio: 'Villa Ale', cps: ['L6300'], variantes: ['villa ale', 'ale'] },
-        { barrio: 'Villa Alonso', cps: ['L6300'], variantes: ['villa alonso', 'alonso'] },
-        { barrio: 'Villa Aurora', cps: ['L6300', 'L6301'], variantes: ['villa aurora', 'aurora'] },
-        { barrio: 'Villa Bertotti', cps: ['L6300', 'L6301'], variantes: ['villa bertotti', 'bertotti'] },
-        { barrio: 'Villa Olga', cps: ['L6300', 'L6301'], variantes: ['villa olga', 'olga'] },
-
-        // --- Zona Toay (limítrofe) ---
-        { barrio: 'Toay', cps: ['L6301'], variantes: ['toay', 'ciudad de toay'] },
-
-        // --- Ciudad completa (por si escriben "Santa Rosa") ---
-        { barrio: 'Santa Rosa', cps: ['L6300'], variantes: ['santa rosa', 'santa rosa la pampa', 'la pampa', 'capital'] }
-    ];
-
-    // Normalizar texto
-    function normalizeText(text) {
-        return text
-            .toLowerCase()
-            .trim()
-            .normalize('NFD')
-            .replace(/[\u0300-\u036f]/g, '')
-            .replace(/[.,#-]/g, '')
-            .replace(/\s+/g, ' ');
-    }
-
-    const coverageInput = document.getElementById('coverageInput');
-    const checkCoverageBtn = document.getElementById('checkCoverageBtn');
-    const coverageResult = document.getElementById('coverageResult');
-
-    function checkCoverage() {
-        const query = normalizeText(coverageInput.value);
-        
-        if (!query) {
-            coverageResult.innerHTML = '⚠️ Por favor, ingresá un barrio, dirección o código postal.';
-            coverageResult.className = 'coverage-result error';
-            return;
-        }
-        
-        coverageResult.innerHTML = '⏳ Verificando disponibilidad...';
-        coverageResult.className = 'coverage-result loading';
-        
-        setTimeout(() => {
-            let matchFound = null;
+    <!-- Header / Navegación -->
+    <header class="header">
+        <div class="container header-container">
+            <a href="#" class="logo">
+                <img src="images/logo.png" alt="NET12 Telecomunicaciones Logo">
+            </a>
             
-            for (const zona of coverageDatabase) {
-                const barrioNorm = normalizeText(zona.barrio);
-                const coincideBarrio = barrioNorm.includes(query) || query.includes(barrioNorm);
-                
-                const coincideVariante = zona.variantes.some(v => {
-                    const vNorm = normalizeText(v);
-                    return query.includes(vNorm) || vNorm.includes(query);
-                });
-                
-                const coincideCP = zona.cps.some(cp => 
-                    query === normalizeText(cp) || query.includes(normalizeText(cp))
-                );
-                
-                if (coincideBarrio || coincideVariante || coincideCP) {
-                    matchFound = zona;
-                    break;
-                }
-            }
+            <div class="header-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <button class="menu-toggle" aria-label="Abrir menú">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+
+            <nav class="nav">
+                <ul>
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#planes">Planes</a></li>
+                    <li><a href="#testimonios">Opiniones</a></li>
+                    <li><a href="#cobertura">Cobertura</a></li>
+                    <li><a href="#nosotros">Nosotros</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                    <li class="nav-btn-mobile"><a href="#contacto" class="btn btn-primary">Contratar Ahora</a></li>
+                </ul>
+            </nav>
+            <a href="#contacto" class="btn btn-primary btn-nav-desktop">Contratar Ahora</a>
+        </div>
+    </header>
+
+    <!-- Sección Hero -->
+    <section id="inicio" class="hero">
+        <div class="container hero-content">
+            <h1>Internet <span>Sin Límites</span> para tu Hogar y Empresa</h1>
+            <p>Disfruta de la mejor experiencia en streaming, gaming y teletrabajo con la red de fibra óptica más estable de Santa Rosa.</p>
+            <div class="hero-buttons">
+                <a href="#planes" class="btn btn-primary">Ver Planes</a>
+                <a href="#contacto" class="btn btn-outline">Contactar Soporte</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Planes -->
+    <section id="planes" class="plans section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Nuestros Planes de Fibra Óptica</h2>
+                <p>Elige el plan que mejor se adapte a tus necesidades. Sin letras chiquitas.</p>
+            </div>
             
-            if (matchFound) {
-                coverageResult.innerHTML = `✅ ¡Buenas noticias! Tenemos cobertura en <strong>${matchFound.barrio}</strong>. <a href="#contacto" style="color: inherit; text-decoration: underline;">Contratá ahora</a>`;
-                coverageResult.className = 'coverage-result success';
-            } else {
-                try {
-                    const busquedas = JSON.parse(localStorage.getItem('busquedasSinCobertura') || '[]');
-                    busquedas.push({ zona: query, fecha: new Date().toISOString() });
-                    localStorage.setItem('busquedasSinCobertura', JSON.stringify(busquedas));
-                } catch(e) {}
-                
-                coverageResult.innerHTML = `❌ Todavía no llegamos a tu zona. <a href="https://wa.me/5491150059148?text=Hola,%20quiero%20saber%20si%20tienen%20cobertura%20en%20${encodeURIComponent(query)}" target="_blank" style="color: inherit; text-decoration: underline;">Avisanos por WhatsApp</a> y te confirmamos.`;
-                coverageResult.className = 'coverage-result error';
-            }
-        }, 800);
-    }
+            <div class="plans-grid">
+                <!-- Plan 10 -->
+                <div class="plan-card animate-on-scroll">
+                    <div class="plan-header">
+                        <h3>PLAN</h3>
+                        <div class="plan-speed">10</div>
+                        <p class="plan-desc">Ideal para navegar y redes sociales</p>
+                    </div>
+                    <div class="plan-features">
+                        <ul>
+                            <li><i class="fa-solid fa-wifi"></i> Red 2.4 GHz</li>
+                            <li><i class="fa-solid fa-house"></i> Hasta 5 dispositivos</li>
+                            <li><i class="fa-solid fa-shield-halved"></i> Seguridad Básica</li>
+                        </ul>
+                    </div>
+                    <div class="plan-footer">
+                        <a href="#contacto" class="btn btn-plan">Solicitar Plan</a>
+                    </div>
+                </div>
 
-    if (checkCoverageBtn) {
-        checkCoverageBtn.addEventListener('click', checkCoverage);
-        coverageInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                checkCoverage();
-            }
-        });
-    }
+                <!-- Plan 20 (Destacado) -->
+                <div class="plan-card featured animate-on-scroll">
+                    <div class="badge">Más Popular</div>
+                    <div class="plan-header">
+                        <h3>PLAN</h3>
+                        <div class="plan-speed">20</div>
+                        <p class="plan-desc">El equilibrio perfecto para tu hogar</p>
+                    </div>
+                    <div class="plan-features">
+                        <ul>
+                            <li><i class="fa-solid fa-wifi"></i> Red 2.4G y 5G</li>
+                            <li><i class="fa-solid fa-play"></i> Streaming HD/4K</li>
+                            <li><i class="fa-solid fa-house"></i> Hasta 10 dispositivos</li>
+                        </ul>
+                    </div>
+                    <div class="plan-footer">
+                        <a href="#contacto" class="btn btn-primary">Solicitar Plan</a>
+                    </div>
+                </div>
 
-    // =========================================
-    // 6. SCROLL REVEAL (ANIMACIONES)
-    // =========================================
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: "0px 0px -50px 0px"
-    };
+                <!-- Plan Max -->
+                <div class="plan-card animate-on-scroll">
+                    <div class="plan-header">
+                        <h3>PLAN</h3>
+                        <div class="plan-speed">MAX</div>
+                        <p class="plan-desc">Máxima potencia para gaming y 4K</p>
+                    </div>
+                    <div class="plan-features">
+                        <ul>
+                            <li><i class="fa-solid fa-wifi"></i> Red 2.4G y 5G Dual</li>
+                            <li><i class="fa-solid fa-play"></i> Streaming 4K + Gaming</li>
+                            <li><i class="fa-solid fa-house"></i> Dispositivos Ilimitados</li>
+                        </ul>
+                    </div>
+                    <div class="plan-footer">
+                        <a href="#contacto" class="btn btn-plan">Solicitar Plan</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
+    <!-- Sección de Testimonios -->
+    <section id="testimonios" class="testimonials section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Lo que dicen nuestros clientes</h2>
+                <p>Miles de hogares de Santa Rosa ya confían en NET12 Telecomunicaciones.</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card animate-on-scroll">
+                    <div class="stars">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p>"La instalación fue rapidísima y la velocidad es tal cual la prometieron. Ahora puedo trabajar sin cortes."</p>
+                    <div class="client-info">
+                        <strong>María G.</strong> - Villa Parque
+                    </div>
+                </div>
+                <div class="testimonial-card animate-on-scroll">
+                    <div class="stars">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p>"El soporte técnico responde al toque. Tuve un problema con el router y me lo solucionaron en minutos."</p>
+                    <div class="client-info">
+                        <strong>Carlos R.</strong> - Villa Santillán
+                    </div>
+                </div>
+                <div class="testimonial-card animate-on-scroll">
+                    <div class="stars">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p>"Contraté el Plan Max para gaming y la verdad es que no me arrepiento. Cero lag, todo perfecto."</p>
+                    <div class="client-info">
+                        <strong>Lucas P.</strong> - Villa Alonso Norte
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    const animatedElements = document.querySelectorAll('.animate-on-scroll');
-    
-    animatedElements.forEach((el, index) => {
-        el.style.transitionDelay = `${index * 0.1}s`;
-        observer.observe(el);
-    });
-
-    // =========================================
-    // 7. FAQ ACORDEÓN
-    // =========================================
-    const faqQuestions = document.querySelectorAll('.faq-question');
-    
-    faqQuestions.forEach(question => {
-        question.addEventListener('click', () => {
-            const faqItem = question.parentElement;
+    <!-- Sección de Cobertura con Verificador -->
+    <section id="cobertura" class="coverage section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Verificá tu Cobertura</h2>
+                <p>Ingresá tu barrio, dirección o código postal para confirmar si ya llegamos a tu zona.</p>
+            </div>
             
-            document.querySelectorAll('.faq-item').forEach(item => {
-                if (item !== faqItem) {
-                    item.classList.remove('active');
-                }
-            });
+            <!-- Verificador de Cobertura -->
+            <div class="coverage-checker">
+                <div class="checker-input">
+                    <input type="text" id="coverageInput" placeholder="Ej: Villa Parque, Polonia 1756, L6300..." aria-label="Ingresá tu barrio, dirección o código postal">
+                    <button id="checkCoverageBtn" class="btn btn-primary">
+                        <i class="fa-solid fa-magnifying-glass"></i> Verificar
+                    </button>
+                </div>
+                <div id="coverageResult" class="coverage-result"></div>
+            </div>
 
-            faqItem.classList.toggle('active');
-        });
-    });
+            <!-- Lista de zonas con cobertura -->
+            <h3 style="text-align:center; margin: 40px 0 20px; color: var(--text-dark); font-size: 1.2rem;">Zonas con cobertura confirmada</h3>
+            <div class="coverage-grid">
+                <div class="coverage-item"><i class="fa-solid fa-location-dot"></i> Villa Parque</div>
+                <div class="coverage-item"><i class="fa-solid fa-location-dot"></i> Ntra. Sra. de Luján</div>
+                <div class="coverage-item"><i class="fa-solid fa-location-dot"></i> Villa Santillán</div>
+                <div class="coverage-item"><i class="fa-solid fa-location-dot"></i> Villa Alonso Norte</div>
+                <div class="coverage-item"><i class="fa-solid fa-location-dot"></i> Aeropuerto</div>
+                <div class="coverage-item"><i class="fa-solid fa-location-dot"></i> Villa Martita</div>
+                <div class="coverage-item"><i class="fa-solid fa-location-dot"></i> Centro Empleados</div>
+                <div class="coverage-item"><i class="fa-solid fa-location-dot"></i> Centro</div>
+                <div class="coverage-item"><i class="fa-solid fa-location-dot"></i> Polonia</div>
+            </div>
+            <p class="coverage-note">Si no ves tu barrio, <a href="#contacto">consultanos</a> y te confirmamos disponibilidad.</p>
+        </div>
+    </section>
 
-    // =========================================
-    // 8. FORMULARIO DE CONTACTO
-    // =========================================
-    const contactForm = document.getElementById('contactForm');
-    const formMessage = document.getElementById('formMessage');
+    <!-- Sección Sobre Nosotros -->
+    <section id="nosotros" class="about section">
+        <div class="container">
+            <div class="about-wrapper">
+                <div class="about-image">
+                    <div class="about-icon">
+                        <i class="fa-solid fa-tower-broadcast"></i>
+                    </div>
+                </div>
+                <div class="about-text">
+                    <h2>Somos NET12</h2>
+                    <p>Nacimos con una misión clara: que los vecinos de <strong>Santa Rosa</strong> tengan <strong>internet de verdad</strong>. Sin caídas, sin latencias, sin excusas.</p>
+                    <p>Somos una empresa local, atendida por personas reales que entienden tus necesidades. No somos un call center automatizado, somos tus vecinos.</p>
+                    <div class="about-stats">
+                        <div class="stat">
+                            <strong>+2.000</strong>
+                            <span>Hogares conectados</span>
+                        </div>
+                        <div class="stat">
+                            <strong>99.9%</strong>
+                            <span>Uptime garantizado</span>
+                        </div>
+                        <div class="stat">
+                            <strong>24/7</strong>
+                            <span>Soporte local</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            formMessage.textContent = '¡Solicitud enviada con éxito! Nos contactaremos a la brevedad.';
-            formMessage.style.color = '#22c55e';
-            
-            contactForm.reset();
-            
-            setTimeout(() => {
-                formMessage.textContent = '';
-            }, 5000);
-        });
-    }
+    <!-- Sección de Preguntas Frecuentes -->
+    <section id="faq" class="faq section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Preguntas Frecuentes</h2>
+                <p>Todo lo que necesitas saber antes de contratar.</p>
+            </div>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <button class="faq-question">¿Cuánto tarda la instalación? <span class="icon">+</span></button>
+                    <div class="faq-answer"><p>Entre 24 y 48 horas hábiles desde que confirmás el servicio.</p></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">¿Tiene costo el router? <span class="icon">+</span></button>
+                    <div class="faq-answer"><p>No, el router está incluido en todos los planes sin costo adicional.</p></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">¿Hay permanencia mínima? <span class="icon">+</span></button>
+                    <div class="faq-answer"><p>No exigimos permanencia. Podés darte de baja cuando quieras sin penalidades.</p></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">¿Qué medios de pago aceptan? <span class="icon">+</span></button>
+                    <div class="faq-answer"><p>Tarjetas de crédito, débito, transferencia bancaria y efectivo en puntos de pago.</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    // =========================================
-    // 9. BOTÓN VOLVER ARRIBA
-    // =========================================
-    const backToTop = document.getElementById('backToTop');
-    
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 400) {
-            backToTop.classList.add('visible');
-        } else {
-            backToTop.classList.remove('visible');
-        }
-    });
-    
-    backToTop.addEventListener('click', () => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    });
+    <!-- Sección de Contacto -->
+    <section id="contacto" class="contact section">
+        <div class="container">
+            <div class="contact-wrapper">
+                <div class="contact-info">
+                    <h2>¿Listo para mejorar tu conexión?</h2>
+                    <p>Nuestro equipo de soporte técnico está disponible para ayudarte a contratar el mejor plan para tu hogar o empresa.</p>
+                    
+                    <div class="contact-item">
+                        <i class="fa-solid fa-phone"></i>
+                        <div>
+                            <h4>Llámanos</h4>
+                            <p>+54 9 115005 9148</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fa-brands fa-whatsapp"></i>
+                        <div>
+                            <h4>WhatsApp</h4>
+                            <p>+54 9 115005 9148</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fa-solid fa-envelope"></i>
+                        <div>
+                            <h4>Escríbenos</h4>
+                            <p>contacto.net12.telecom@gmail.com</p>
+                        </div>
+                    </div>
 
-    // =========================================
-    // 10. SMOOTH SCROLL
-    // =========================================
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                const offsetTop = target.offsetTop - 80;
-                window.scrollTo({
-                    top: offsetTop,
-                    behavior: 'smooth'
-                });
-            }
-        });
-    });
-});
+                    <div class="contact-item">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <div>
+                            <h4>Oficina</h4>
+                            <p>Polonia 1756, Santa Rosa, La Pampa</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-form-container">
+                    <form id="contactForm" class="contact-form">
+                        <h3>Solicita tu instalación</h3>
+                        <div class="form-group">
+                            <input type="text" placeholder="Nombre completo" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="Correo electrónico" required>
+                        </div>
+                        <div class="form-group">
+                            <select required>
+                                <option value="" disabled selected>Selecciona un plan</option>
+                                <option value="10">Plan 10</option>
+                                <option value="20">Plan 20</option>
+                                <option value="max">Plan Max</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Enviar Solicitud</button>
+                        <p id="formMessage" class="form-message"></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="logo">
+                <img src="images/logo.png" alt="NET12 Telecomunicaciones Logo" class="footer-logo">
+            </div>
+            <p>© 2026 NET12 Telecomunicaciones. Todos los derechos reservados.</p>
+            <div class="socials">
+                <a href="https://wa.me/5491150059148" target="_blank" aria-label="WhatsApp">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Botón Flotante de WhatsApp -->
+    <a href="https://wa.me/5491150059148?text=Hola%20NET12,%20quiero%20consultar%20sobre%20los%20planes%20de%20internet." 
+       class="whatsapp-float" 
+       target="_blank" 
+       aria-label="Contactar por WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- Botón Volver Arriba -->
+    <button id="backToTop" class="back-to-top" aria-label="Volver arriba">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
