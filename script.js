@@ -113,88 +113,83 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // =========================================
     // 5. VERIFICADOR DE COBERTURA - SANTA ROSA, LA PAMPA
+    // Base de datos completa con todos los barrios de Santa Rosa
     // =========================================
-    
-    // Base de datos de barrios y zonas con cobertura en Santa Rosa
     const coverageDatabase = [
-        { 
-            barrio: 'Villa Parque', 
-            cps: ['L6300', '6300'],
-            variantes: ['villa parque', 'parque', 'v parque']
-        },
-        { 
-            barrio: 'Nuestra Señora de Luján', 
-            cps: ['L6300'],
-            variantes: ['lujan', 'nuestra senora de lujan', 'ns de lujan', 'virgen de lujan']
-        },
-        { 
-            barrio: 'Villa Santillán', 
-            cps: ['L6300'],
-            variantes: ['santillan', 'villa santillan', 'v santillan']
-        },
-        { 
-            barrio: 'Villa Alonso Norte', 
-            cps: ['L6300'],
-            variantes: ['villa alonso', 'alonso norte', 'alonso', 'v alonso']
-        },
-        { 
-            barrio: 'Aeropuerto', 
-            cps: ['L6300'],
-            variantes: ['aeropuerto', 'aeropuerto 1', 'barrio aeropuerto']
-        },
-        { 
-            barrio: 'Villa Martita', 
-            cps: ['L6300'],
-            variantes: ['martita', 'villa martita', 'v martita']
-        },
-        { 
-            barrio: 'Centro Empleados de Comercio', 
-            cps: ['L6300'],
-            variantes: ['centro empleados', 'empleados de comercio', 'cec', 'empleados comercio']
-        },
-        { 
-            barrio: 'Centro', 
-            cps: ['L6300'],
-            variantes: ['centro', 'microcentro', 'centro santa rosa']
-        },
-        { 
-            barrio: 'Polonia', 
-            cps: ['B1867CAT', 'B1867', 'L6300'],
-            variantes: ['polonia', 'polonia 1756', 'calle polonia']
-        },
-        { 
-            barrio: 'Villa Germinal', 
-            cps: ['L6300'],
-            variantes: ['germinal', 'villa germinal']
-        },
-        { 
-            barrio: 'Barrio Este', 
-            cps: ['L6300'],
-            variantes: ['barrio este', 'este']
-        },
-        { 
-            barrio: 'Barrio Norte', 
-            cps: ['L6300'],
-            variantes: ['barrio norte', 'norte']
-        },
-        { 
-            barrio: 'Barrio Sur', 
-            cps: ['L6300'],
-            variantes: ['barrio sur', 'sur']
-        },
-        { 
-            barrio: 'Barrio Oeste', 
-            cps: ['L6300'],
-            variantes: ['barrio oeste', 'oeste']
-        },
-        { 
-            barrio: 'Santa Rosa', 
-            cps: ['L6300'],
-            variantes: ['santa rosa', 'santa rosa la pampa', 'la pampa']
-        }
+        // --- Barrios con cobertura confirmada por CPE ---
+        { barrio: 'Villa Parque', cps: ['L6300', '6300'], variantes: ['villa parque', 'parque', 'v parque'] },
+        { barrio: 'Nuestra Señora de Luján', cps: ['L6300', '6300'], variantes: ['lujan', 'nuestra senora de lujan', 'ns de lujan', 'virgen de lujan'] },
+        { barrio: 'Villa Santillán', cps: ['L6300', '6300'], variantes: ['santillan', 'villa santillan', 'v santillan'] },
+        { barrio: 'Villa Alonso Norte', cps: ['L6300', '6300'], variantes: ['villa alonso', 'alonso norte', 'alonso', 'v alonso'] },
+        { barrio: 'Aeropuerto', cps: ['L6300', '6300'], variantes: ['aeropuerto', 'aeropuerto 1', 'barrio aeropuerto'] },
+        { barrio: 'Villa Martita', cps: ['L6300', '6300'], variantes: ['martita', 'villa martita', 'v martita'] },
+        { barrio: 'Centro Empleados de Comercio', cps: ['L6300', '6300'], variantes: ['centro empleados', 'empleados de comercio', 'cec', 'empleados comercio'] },
+        { barrio: 'Centro', cps: ['L6300', '6300'], variantes: ['centro', 'microcentro', 'centro santa rosa'] },
+        { barrio: 'Polonia', cps: ['B1867CAT', 'B1867', 'L6300'], variantes: ['polonia', 'polonia 1756', 'calle polonia'] },
+
+        // --- Otros barrios de Santa Rosa ---
+        { barrio: 'Villa Germinal', cps: ['L6300'], variantes: ['germinal', 'villa germinal'] },
+        { barrio: 'Barrio Este', cps: ['L6300'], variantes: ['barrio este', 'este'] },
+        { barrio: 'Barrio Norte', cps: ['L6300'], variantes: ['barrio norte', 'norte'] },
+        { barrio: 'Barrio Sur', cps: ['L6300'], variantes: ['barrio sur', 'sur'] },
+        { barrio: 'Barrio Oeste', cps: ['L6300'], variantes: ['barrio oeste', 'oeste'] },
+        { barrio: 'Villa Elvina', cps: ['L6300'], variantes: ['elvina', 'villa elvina'] },
+        { barrio: 'Villa del Busto', cps: ['L6300'], variantes: ['busto', 'villa del busto', 'v del busto'] },
+        { barrio: 'Villa Sarmiento', cps: ['L6300'], variantes: ['sarmiento', 'villa sarmiento'] },
+        { barrio: 'Villa Las Camelias', cps: ['L6300'], variantes: ['camelias', 'villa las camelias', 'v las camelias'] },
+        { barrio: 'Villa Uhalde', cps: ['L6300'], variantes: ['uhalde', 'villa uhalde', 'v uhalde'] },
+        { barrio: 'Villa Thomas Mason', cps: ['L6300'], variantes: ['thomas mason', 'villa thomas mason', 'v thomas mason'] },
+        { barrio: 'Villa Elisa', cps: ['L6300'], variantes: ['elisa', 'villa elisa'] },
+        { barrio: 'Sagrado Corazón de Jesús', cps: ['L6300'], variantes: ['sagrado corazon', 'sagrado corazon de jesus', 'sc de jesus'] },
+        { barrio: 'Malvinas Argentinas', cps: ['L6300'], variantes: ['malvinas', 'malvinas argentinas'] },
+        { barrio: 'Almafuerte', cps: ['L6300'], variantes: ['almafuerte', 'barrio almafuerte'] },
+        { barrio: 'Bella Vista', cps: ['L6300'], variantes: ['bella vista', 'b vista'] },
+        { barrio: 'Fitte', cps: ['L6300'], variantes: ['fitte', 'barrio fitte'] },
+        { barrio: 'Butaló', cps: ['L6300'], variantes: ['butalo', 'barrio butalo', 'butalo 1', 'butalo 2', 'butalo 3'] },
+        { barrio: 'FONAVI', cps: ['L6300'], variantes: ['fonavi', 'fonavi 25', 'fonavi 27', 'fonavi 34', 'fonavi 42', 'fonavi 1702'] },
+        { barrio: 'Plan 5000', cps: ['L6300'], variantes: ['plan 5000', 'plan 5.000', 'plan cinco mil'] },
+        { barrio: '26 de Septiembre', cps: ['L6300'], variantes: ['26 de septiembre', 'veintiseis de septiembre'] },
+        { barrio: 'Los Hornos', cps: ['L6300'], variantes: ['los hornos', 'hornos'] },
+        { barrio: 'Escondido', cps: ['L6300'], variantes: ['escondido', 'barrio escondido'] },
+        { barrio: 'El Salitral', cps: ['L6300'], variantes: ['el salitral', 'nuevo salitral', 'salitral'] },
+        { barrio: 'Micaela García', cps: ['L6300'], variantes: ['micaela garcia', 'micaela'] },
+        { barrio: 'Nuevo Amanecer', cps: ['L6300'], variantes: ['nuevo amanecer', 'el amanecer', 'amanecer'] },
+        { barrio: 'Santa María de las Pampas', cps: ['L6300'], variantes: ['santa maria de las pampas', 'santa maria'] },
+        { barrio: 'Villa Navarro Sarmiento', cps: ['L6300'], variantes: ['navarro sarmiento', 'villa navarro sarmiento'] },
+        { barrio: 'Villa Amalia', cps: ['L6300'], variantes: ['amalia', 'villa amalia'] },
+        { barrio: 'Villa Hilda', cps: ['L6300'], variantes: ['hilda', 'villa hilda'] },
+        { barrio: 'Inti Hue', cps: ['L6300'], variantes: ['inti hue', 'intihue'] },
+        { barrio: 'Lowo Che', cps: ['L6300', 'L6301'], variantes: ['lowo che', 'lowoche', 'lowo che este', 'lowo che oeste'] },
+        { barrio: 'Nueva Vista', cps: ['L6300'], variantes: ['nueva vista', 'nva vista'] },
+        { barrio: 'El Faro', cps: ['L6300'], variantes: ['el faro', 'faro'] },
+        { barrio: 'Colonos Pampeanos', cps: ['L6300'], variantes: ['colonos pampeanos', 'colonos'] },
+        { barrio: 'Portal del Sur', cps: ['L6300'], variantes: ['portal del sur', 'portal sur'] },
+        { barrio: 'Pueblos Originarios', cps: ['L6300'], variantes: ['pueblos originarios', 'originarios'] },
+        { barrio: 'Nelson Mandela', cps: ['L6300'], variantes: ['nelson mandela', 'mandela'] },
+        { barrio: 'ARA San Juan', cps: ['L6300'], variantes: ['ara san juan', 'ara'] },
+        { barrio: 'Peñi Ruca', cps: ['L6300'], variantes: ['peni ruca', 'peñi ruca'] },
+        { barrio: 'Regazzoli', cps: ['L6300'], variantes: ['regazzoli', 'aquiles regazzoli'] },
+        { barrio: 'Néstor Kirchner', cps: ['L6300'], variantes: ['nestor kirchner', 'kirchner'] },
+        { barrio: 'Esperanza', cps: ['L6300'], variantes: ['esperanza', 'barrio esperanza'] },
+        { barrio: 'Matadero', cps: ['L6300'], variantes: ['matadero', 'barrio matadero'] },
+        { barrio: 'Congreso', cps: ['L6300'], variantes: ['congreso', 'barrio congreso'] },
+        { barrio: 'Pioneros', cps: ['L6300'], variantes: ['pioneros', 'barrio pioneros'] },
+        { barrio: 'Chakra Raíz', cps: ['L6300', 'L6301'], variantes: ['chakra raiz', 'chakra'] },
+        { barrio: 'Zona Quintas', cps: ['L6300'], variantes: ['zona quintas', 'quintas', 'zona quintas oeste', 'zona quintas sur'] },
+        { barrio: 'Villa Ale', cps: ['L6300'], variantes: ['villa ale', 'ale'] },
+        { barrio: 'Villa Alonso', cps: ['L6300'], variantes: ['villa alonso', 'alonso'] },
+        { barrio: 'Villa Aurora', cps: ['L6300', 'L6301'], variantes: ['villa aurora', 'aurora'] },
+        { barrio: 'Villa Bertotti', cps: ['L6300', 'L6301'], variantes: ['villa bertotti', 'bertotti'] },
+        { barrio: 'Villa Olga', cps: ['L6300', 'L6301'], variantes: ['villa olga', 'olga'] },
+
+        // --- Zona Toay (limítrofe) ---
+        { barrio: 'Toay', cps: ['L6301'], variantes: ['toay', 'ciudad de toay'] },
+
+        // --- Ciudad completa (por si escriben "Santa Rosa") ---
+        { barrio: 'Santa Rosa', cps: ['L6300'], variantes: ['santa rosa', 'santa rosa la pampa', 'la pampa', 'capital'] }
     ];
 
-    // Normalizar texto (quita acentos, minúsculas, etc.)
+    // Normalizar texto
     function normalizeText(text) {
         return text
             .toLowerCase()
@@ -247,7 +242,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 coverageResult.innerHTML = `✅ ¡Buenas noticias! Tenemos cobertura en <strong>${matchFound.barrio}</strong>. <a href="#contacto" style="color: inherit; text-decoration: underline;">Contratá ahora</a>`;
                 coverageResult.className = 'coverage-result success';
             } else {
-                // Guardar búsqueda sin cobertura para análisis
                 try {
                     const busquedas = JSON.parse(localStorage.getItem('busquedasSinCobertura') || '[]');
                     busquedas.push({ zona: query, fecha: new Date().toISOString() });
