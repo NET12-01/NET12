@@ -13,35 +13,30 @@
 </head>
 <body>
 
-    <!-- Banner de Promoción con Cuenta Regresiva -->
-    <div class="promo-banner" id="promoBanner">
-        <div class="container promo-content">
-            <p><i class="fa-solid fa-bolt"></i> <strong>PROMO DE LANZAMIENTO:</strong> 50% OFF en los primeros 3 meses. Termina en: 
-                <span id="countdown" class="countdown">--d --h --m --s</span>
-            </p>
-            <button class="promo-close" onclick="document.getElementById('promoBanner').style.display='none'" aria-label="Cerrar">
-                <i class="fa-solid fa-times"></i>
-            </button>
-        </div>
-    </div>
-
     <!-- Header / Navegación -->
     <header class="header">
         <div class="container header-container">
-            <a href="#" class="logo">
-                <img src="images/logo.png" alt="NET12 Telecomunicaciones Logo">
+            
+            <!-- Logo -->
+            <a href="#inicio" class="logo">
+                <img src="images/logo.png" alt="NET12 Telecomunicaciones">
             </a>
             
+            <!-- Botón Contratar (Escritorio) -->
+            <a href="#contacto" class="btn btn-primary btn-nav-desktop">Contratar Ahora</a>
+            
+            <!-- Acciones (Tema + Menú móvil) -->
             <div class="header-actions">
-                <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
+                <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema" type="button">
                     <i class="fa-solid fa-moon"></i>
                 </button>
-                <button class="menu-toggle" aria-label="Abrir menú">
+                <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú" type="button">
                     <i class="fa-solid fa-bars"></i>
                 </button>
             </div>
-
-            <nav class="nav">
+            
+            <!-- Navegación -->
+            <nav class="nav" id="mainNav">
                 <ul>
                     <li><a href="#inicio">Inicio</a></li>
                     <li><a href="#planes">Planes</a></li>
@@ -53,7 +48,6 @@
                     <li class="nav-btn-mobile"><a href="#contacto" class="btn btn-primary">Contratar Ahora</a></li>
                 </ul>
             </nav>
-            <a href="#contacto" class="btn btn-primary btn-nav-desktop">Contratar Ahora</a>
         </div>
     </header>
 
@@ -152,33 +146,27 @@
                         <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
                     </div>
                     <p>"La instalación fue rapidísima y la velocidad es tal cual la prometieron. Ahora puedo trabajar sin cortes."</p>
-                    <div class="client-info">
-                        <strong>María G.</strong> - Villa Parque
-                    </div>
+                    <div class="client-info"><strong>María G.</strong> - Villa Parque</div>
                 </div>
                 <div class="testimonial-card animate-on-scroll">
                     <div class="stars">
                         <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
                     </div>
                     <p>"El soporte técnico responde al toque. Tuve un problema con el router y me lo solucionaron en minutos."</p>
-                    <div class="client-info">
-                        <strong>Carlos R.</strong> - Villa Santillán
-                    </div>
+                    <div class="client-info"><strong>Carlos R.</strong> - Villa Santillán</div>
                 </div>
                 <div class="testimonial-card animate-on-scroll">
                     <div class="stars">
                         <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
                     </div>
                     <p>"Contraté el Plan Max para gaming y la verdad es que no me arrepiento. Cero lag, todo perfecto."</p>
-                    <div class="client-info">
-                        <strong>Lucas P.</strong> - Villa Alonso Norte
-                    </div>
+                    <div class="client-info"><strong>Lucas P.</strong> - Villa Alonso Norte</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Sección de Cobertura con Verificador -->
+    <!-- Sección de Cobertura -->
     <section id="cobertura" class="coverage section">
         <div class="container">
             <div class="section-title">
@@ -186,19 +174,17 @@
                 <p>Ingresá tu barrio, dirección o código postal para confirmar si ya llegamos a tu zona.</p>
             </div>
             
-            <!-- Verificador de Cobertura -->
             <div class="coverage-checker">
                 <div class="checker-input">
                     <input type="text" id="coverageInput" placeholder="Ej: Villa Parque, Polonia 1756, L6300..." aria-label="Ingresá tu barrio, dirección o código postal">
-                    <button id="checkCoverageBtn" class="btn btn-primary">
+                    <button id="checkCoverageBtn" class="btn btn-primary" type="button">
                         <i class="fa-solid fa-magnifying-glass"></i> Verificar
                     </button>
                 </div>
                 <div id="coverageResult" class="coverage-result"></div>
             </div>
 
-            <!-- Lista de zonas con cobertura -->
-            <h3 style="text-align:center; margin: 40px 0 20px; color: var(--text-dark); font-size: 1.2rem;">Zonas con cobertura confirmada</h3>
+            <h3 class="coverage-subtitle">Zonas con cobertura confirmada</h3>
             <div class="coverage-grid">
                 <div class="coverage-item"><i class="fa-solid fa-location-dot"></i> Villa Parque</div>
                 <div class="coverage-item"><i class="fa-solid fa-location-dot"></i> Ntra. Sra. de Luján</div>
@@ -246,7 +232,7 @@
         </div>
     </section>
 
-    <!-- Sección de Preguntas Frecuentes -->
+    <!-- Sección FAQ -->
     <section id="faq" class="faq section">
         <div class="container">
             <div class="section-title">
@@ -255,19 +241,19 @@
             </div>
             <div class="faq-container">
                 <div class="faq-item">
-                    <button class="faq-question">¿Cuánto tarda la instalación? <span class="icon">+</span></button>
+                    <button class="faq-question" type="button">¿Cuánto tarda la instalación? <span class="icon">+</span></button>
                     <div class="faq-answer"><p>Entre 24 y 48 horas hábiles desde que confirmás el servicio.</p></div>
                 </div>
                 <div class="faq-item">
-                    <button class="faq-question">¿Tiene costo el router? <span class="icon">+</span></button>
+                    <button class="faq-question" type="button">¿Tiene costo el router? <span class="icon">+</span></button>
                     <div class="faq-answer"><p>No, el router está incluido en todos los planes sin costo adicional.</p></div>
                 </div>
                 <div class="faq-item">
-                    <button class="faq-question">¿Hay permanencia mínima? <span class="icon">+</span></button>
+                    <button class="faq-question" type="button">¿Hay permanencia mínima? <span class="icon">+</span></button>
                     <div class="faq-answer"><p>No exigimos permanencia. Podés darte de baja cuando quieras sin penalidades.</p></div>
                 </div>
                 <div class="faq-item">
-                    <button class="faq-question">¿Qué medios de pago aceptan? <span class="icon">+</span></button>
+                    <button class="faq-question" type="button">¿Qué medios de pago aceptan? <span class="icon">+</span></button>
                     <div class="faq-answer"><p>Tarjetas de crédito, débito, transferencia bancaria y efectivo en puntos de pago.</p></div>
                 </div>
             </div>
@@ -343,8 +329,8 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container footer-content">
-            <div class="logo">
-                <img src="images/logo.png" alt="NET12 Telecomunicaciones Logo" class="footer-logo">
+            <div class="logo-footer">
+                <img src="images/logo.png" alt="NET12 Telecomunicaciones" class="footer-logo">
             </div>
             <p>© 2026 NET12 Telecomunicaciones. Todos los derechos reservados.</p>
             <div class="socials">
@@ -364,7 +350,7 @@
     </a>
 
     <!-- Botón Volver Arriba -->
-    <button id="backToTop" class="back-to-top" aria-label="Volver arriba">
+    <button id="backToTop" class="back-to-top" aria-label="Volver arriba" type="button">
         <i class="fa-solid fa-arrow-up"></i>
     </button>
 
